@@ -1,18 +1,57 @@
-erDiagram
-    WHATSFRESH ||--o{ INGREDIENT_TYPES : contains
-    INGREDIENT_TYPES ||--o{ INGRTYPELIST : "provides_view"
+graph TD
+    %% whatsfresh database tables
+    whatsfresh[whatsfresh DB]
+    accounts[accounts]
+    users[users]
+    measures[global_measure_units]
+    acc_users[accounts_users]
+    ingr_types[ingredient_types]
+    brands[brands]
+    ingr_batches[ingredient_batches]
+    ingredients[ingredients]
+    prod_batches[product_batches]
+    products[products]
+    prod_types[product_types]
+    prod_recipes[product_recipes]
+    tasks[tasks]
+    vendors[vendors]
+    workers[workers]
     
-    INGREDIENT_TYPES {
-        int id PK "whatsfresh db"
-        string name "source table"
-        string description "source table"
-        int account_id FK "source table"
-        char active "source table"
-    }
+    %% Source relationships
+    whatsfresh --> accounts
+    whatsfresh --> users
+    whatsfresh --> measures
+    whatsfresh --> acc_users
+    whatsfresh --> ingr_types
+    whatsfresh --> brands
+    whatsfresh --> ingr_batches
+    whatsfresh --> ingredients
+    whatsfresh --> prod_batches
+    whatsfresh --> products
+    whatsfresh --> prod_types
+    whatsfresh --> prod_recipes
+    whatsfresh --> tasks
+    whatsfresh --> vendors
+    whatsfresh --> workers
 
-    INGRTYPELIST {
-        int ingrTypeID "api_wf db"
-        string ingrTypeName "view"
-        string ingrTypeDesc "view"
-        int acctID "view"
-    }
+    %% api_wf views
+    accounts --> |api_wf view|acctList
+    users --> |api_wf view|userList
+    measures --> |api_wf view|measList
+    acc_users --> |api_wf view|userAcctList
+    ingr_types --> |api_wf view|ingrTypeList
+    brands --> |api_wf view|brndList
+    ingr_batches --> |api_wf view|ingrBtchList
+    ingredients --> |api_wf view|ingrList
+    prod_batches --> |api_wf view|prodBtchList
+    products --> |api_wf view|prodList
+    prod_types --> |api_wf view|prodTypeList
+    prod_recipes --> |api_wf view|rcpeList
+    tasks --> |api_wf view|taskList
+    vendors --> |api_wf view|vndrList
+    workers --> |api_wf view|wrkrList
+
+    %% Styling
+    classDef default fill:#f9f,stroke:#333,stroke-width:2px
+    classDef views fill:#bbf,stroke:#333,stroke-width:2px
+    class acctList,userList,measList,userAcctList,ingrTypeList,brndList,ingrBtchList,ingrList,prodBtchList,prodList,prodTypeList,rcpeList,taskList,vndrList,wrkrList views
