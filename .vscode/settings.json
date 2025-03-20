@@ -1,0 +1,8 @@
+{
+    "markdown.preview.breaks": true,
+    "markdown.extension.toc.updateOnSave": true,
+    "markdown.extension.preview.autoShowPreviewToSide": true,
+    "markdown.links.openLocation": "beside",
+    "markdown.extension.list.indentationSize": "inherit",
+    "markdown.extension.tableFormatter.enabled": true
+}
