@@ -29,6 +29,7 @@ graph TD
 - **api/** - API endpoints and protocols
 - **architecture/** - Backend system design
 - **database/** 
+  - [Database Schema](./server/database/MySQL.mmd)
   - Event types
   - Schema design
   - Stored procedures

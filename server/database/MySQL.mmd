@@ -1,0 +1,16 @@
+erDiagram
+    ingredient_types ||--o{ ingrTypeList : "provides data"
+    ingredient_types {
+        int id PK
+        string name
+        string description
+        int account_id FK
+        char active
+    }
+
+    ingrTypeList {
+        int ingrTypeID
+        string ingrTypeName
+        string ingrTypeDesc
+        int acctID
+    }
