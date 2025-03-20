@@ -1,17 +1,32 @@
 erDiagram
-    whatsfresh.ingredient_types ||--o{ api.wf.ingrTypeList : "provides data"
-    ingredient_types {
-        int id PK "whatsfresh.ingredient_types"
-        string name
-        string description
-        int account_id FK
-        char active
+    %% Database Schemas and Relationships
+    whatsfresh {
+        database_name "whatsfresh"
+    }
+    api_wf {
+        database_name "api_wf"
     }
 
-    %% Database: api_wf
-    ingrTypeList {
-        int ingrTypeID "api_wf.ingrTypeList"
-        string ingrTypeName
-        string ingrTypeDesc
-        int acctID
+    %% Tables and Views
+    whatsfresh_ingredient_types ||--o{ api_wf_ingrTypeList : "provides view data"
+    
+    whatsfresh_ingredient_types {
+        int id PK "[whatsfresh] Primary Key"
+        string name "Source table column"
+        string description "Source table column"
+        int account_id FK "Foreign Key to accounts"
+        char active "Y/N flag"
     }
+
+    api_wf_ingrTypeList {
+        int ingrTypeID "[api_wf] View column"
+        string ingrTypeName "Maps from source.name"
+        string ingrTypeDesc "Maps from source.description"
+        int acctID "Maps from source.account_id"
+    }
+
+    %% Database context notes
+    note "Database Architecture:
+    - Source tables reside in whatsfresh database
+    - Views are created in api_wf database for API consumption
+    - All views maintain consistent naming conventions"
