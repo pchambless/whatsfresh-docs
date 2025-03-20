@@ -1,59 +1,103 @@
-graph TD
-    %% whatsfresh database tables
-    whatsfresh[whatsfresh DB]
-    accounts[accounts]
-    users[users]
-    measures[global_measure_units]
-    acc_users[accounts_users]
-    ingr_types[ingredient_types]
-    brands[brands]
-    ingr_batches[ingredient_batches]
-    ingredients[ingredients]
-    prod_batches[product_batches]
-    products[products]
-    prod_types[product_types]
-    prod_recipes[product_recipes]
-    tasks[tasks]
-    vendors[vendors]
-    workers[workers]
-    
-    %% Source relationships
-    whatsfresh --> accounts
-    whatsfresh --> users
-    whatsfresh --> measures
-    whatsfresh --> acc_users
-    whatsfresh --> ingr_types
-    whatsfresh --> brands
-    whatsfresh --> ingr_batches
-    whatsfresh --> ingredients
-    whatsfresh --> prod_batches
-    whatsfresh --> products
-    whatsfresh --> prod_types
-    whatsfresh --> prod_recipes
-    whatsfresh --> tasks
-    whatsfresh --> vendors
-    whatsfresh --> workers
+graph LR
+    %% Database subgraphs
+    subgraph WhatsFresh[whatsfresh DB]
+        direction LR
+        accounts[accounts]
+        users[users]
+        measures[global_measure_units]
+        acc_users[accounts_users]
+        ingr_types[ingredient_types]
+        brands[brands]
+        ingr_batches[ingredient_batches]
+        ingredients[ingredients]
+        prod_batches[product_batches]
+        products[products]
+        prod_types[product_types]
+        prod_recipes[product_recipes]
+        tasks[tasks]
+        vendors[vendors]
+        workers[workers]
+    end
 
-    %% EventTypes (api_wf views)
-    accounts --> |"acctList ⚡"|acctList[("acctList")]
-    users --> |"userList ⚡"|userList[("userList")]
-    measures --> |"measList ⚡"|measList[("measList")]
-    ingr_types --> |"ingrTypeList ⚡"|ingrTypeList[("ingrTypeList")]
-    brands --> |"brndList ⚡"|brndList[("brndList")]
-    ingr_batches --> |"ingrBtchList ⚡"|ingrBtchList[("ingrBtchList")]
-    ingredients --> |"ingrList ⚡"|ingrList[("ingrList")]
-    prod_batches --> |"prodBtchList ⚡"|prodBtchList[("prodBtchList")]
-    products --> |"prodList ⚡"|prodList[("prodList")]
-    prod_types --> |"prodTypeList ⚡"|prodTypeList[("prodTypeList")]
-    prod_recipes --> |"rcpeList ⚡"|rcpeList[("rcpeList")]
-    tasks --> |"taskList ⚡"|taskList[("taskList")]
-    vendors --> |"vndrList ⚡"|vndrList[("vndrList")]
-    workers --> |"wrkrList ⚡"|wrkrList[("wrkrList")]
+    subgraph API_WF[api_wf DB Views]
+        direction LR
+        acctList_view[("acctList")]
+        userList_view[("userList")]
+        measList_view[("measList")]
+        ingrTypeList_view[("ingrTypeList")]
+        brndList_view[("brndList")]
+        ingrBtchList_view[("ingrBtchList")]
+        ingrList_view[("ingrList")]
+        prodBtchList_view[("prodBtchList")]
+        prodList_view[("prodList")]
+        prodTypeList_view[("prodTypeList")]
+        rcpeList_view[("rcpeList")]
+        taskList_view[("taskList")]
+        vndrList_view[("vndrList")]
+        wrkrList_view[("wrkrList")]
+        userAcctList_view[("userAcctList")]
+    end
 
-    %% Complex EventTypes
-    users & acc_users & accounts --> |"userAcctList ⚡"|userAcctList[("userAcctList")]
+    subgraph WF_Server[WF-Server EventTypes]
+        direction LR
+        acctList[acctList]
+        userList[userList]
+        measList[measList]
+        ingrTypeList[ingrTypeList]
+        brndList[brndList]
+        ingrBtchList[ingrBtchList]
+        ingrList[ingrList]
+        prodBtchList[prodBtchList]
+        prodList[prodList]
+        prodTypeList[prodTypeList]
+        rcpeList[rcpeList]
+        taskList[taskList]
+        vndrList[vndrList]
+        wrkrList[wrkrList]
+        userAcctList[userAcctList]
+    end
+
+    %% Database to View relationships
+    accounts --> |"source"|acctList_view
+    users --> |"source"|userList_view
+    measures --> |"source"|measList_view
+    ingr_types --> |"source"|ingrTypeList_view
+    brands --> |"source"|brndList_view
+    ingr_batches --> |"source"|ingrBtchList_view
+    ingredients --> |"source"|ingrList_view
+    prod_batches --> |"source"|prodBtchList_view
+    products --> |"source"|prodList_view
+    prod_types --> |"source"|prodTypeList_view
+    prod_recipes --> |"source"|rcpeList_view
+    tasks --> |"source"|taskList_view
+    vendors --> |"source"|vndrList_view
+    workers --> |"source"|wrkrList_view
+
+    %% Complex view relationships
+    users & acc_users & accounts --> |"source"|userAcctList_view
+
+    %% View to Server EventType relationships
+    acctList_view --> |"⚡"|acctList
+    userList_view --> |"⚡"|userList
+    measList_view --> |"⚡"|measList
+    ingrTypeList_view --> |"⚡"|ingrTypeList
+    brndList_view --> |"⚡"|brndList
+    ingrBtchList_view --> |"⚡"|ingrBtchList
+    ingrList_view --> |"⚡"|ingrList
+    prodBtchList_view --> |"⚡"|prodBtchList
+    prodList_view --> |"⚡"|prodList
+    prodTypeList_view --> |"⚡"|prodTypeList
+    rcpeList_view --> |"⚡"|rcpeList
+    taskList_view --> |"⚡"|taskList
+    vndrList_view --> |"⚡"|vndrList
+    wrkrList_view --> |"⚡"|wrkrList
+    userAcctList_view --> |"⚡"|userAcctList
 
     %% Styling
     classDef default fill:#f9f,stroke:#333,stroke-width:2px
-    classDef eventType fill:#bbf,stroke:#333,stroke-width:2px,stroke-dasharray: 5 5
-    class acctList,userList,measList,ingrTypeList,brndList,ingrBtchList,ingrList,prodBtchList,prodList,prodTypeList,rcpeList,taskList,vndrList,wrkrList,userAcctList eventType
+    classDef viewNode fill:#bbf,stroke:#333,stroke-width:2px,stroke-dasharray: 5 5
+    classDef serverNode fill:#bfb,stroke:#333,stroke-width:2px
+    classDef dbGroup fill:#fff,stroke:#333,stroke-width:2px
+    class WhatsFresh,API_WF,WF_Server dbGroup
+    class acctList_view,userList_view,measList_view,ingrTypeList_view,brndList_view,ingrBtchList_view,ingrList_view,prodBtchList_view,prodList_view,prodTypeList_view,rcpeList_view,taskList_view,vndrList_view,wrkrList_view,userAcctList_view viewNode
+    class acctList,userList,measList,ingrTypeList,brndList,ingrBtchList,ingrList,prodBtchList,prodList,prodTypeList,rcpeList,taskList,vndrList,wrkrList,userAcctList serverNode
