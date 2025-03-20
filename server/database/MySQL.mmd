@@ -1,16 +1,21 @@
 erDiagram
+    %% Database: whatsfresh
     ingredient_types ||--o{ ingrTypeList : "provides data"
     ingredient_types {
-        int id PK
+        int id PK "whatsfresh.ingredient_types"
         string name
         string description
         int account_id FK
         char active
     }
 
+    %% Database: api_wf
     ingrTypeList {
-        int ingrTypeID
+        int ingrTypeID "api_wf.ingrTypeList"
         string ingrTypeName
         string ingrTypeDesc
         int acctID
     }
+
+    %% Database relationships across schemas
+    note "ingredient_types table exists in whatsfresh database" "ingrTypeList view exists in api_wf database"
