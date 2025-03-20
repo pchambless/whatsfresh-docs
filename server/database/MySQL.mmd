@@ -34,24 +34,26 @@ graph TD
     whatsfresh --> vendors
     whatsfresh --> workers
 
-    %% api_wf views
-    accounts --> |api_wf view|acctList
-    users --> |api_wf view|userList
-    measures --> |api_wf view|measList
-    acc_users --> |api_wf view|userAcctList
-    ingr_types --> |api_wf view|ingrTypeList
-    brands --> |api_wf view|brndList
-    ingr_batches --> |api_wf view|ingrBtchList
-    ingredients --> |api_wf view|ingrList
-    prod_batches --> |api_wf view|prodBtchList
-    products --> |api_wf view|prodList
-    prod_types --> |api_wf view|prodTypeList
-    prod_recipes --> |api_wf view|rcpeList
-    tasks --> |api_wf view|taskList
-    vendors --> |api_wf view|vndrList
-    workers --> |api_wf view|wrkrList
+    %% EventTypes (api_wf views)
+    accounts --> |"acctList ⚡"|acctList[("acctList")]
+    users --> |"userList ⚡"|userList[("userList")]
+    measures --> |"measList ⚡"|measList[("measList")]
+    ingr_types --> |"ingrTypeList ⚡"|ingrTypeList[("ingrTypeList")]
+    brands --> |"brndList ⚡"|brndList[("brndList")]
+    ingr_batches --> |"ingrBtchList ⚡"|ingrBtchList[("ingrBtchList")]
+    ingredients --> |"ingrList ⚡"|ingrList[("ingrList")]
+    prod_batches --> |"prodBtchList ⚡"|prodBtchList[("prodBtchList")]
+    products --> |"prodList ⚡"|prodList[("prodList")]
+    prod_types --> |"prodTypeList ⚡"|prodTypeList[("prodTypeList")]
+    prod_recipes --> |"rcpeList ⚡"|rcpeList[("rcpeList")]
+    tasks --> |"taskList ⚡"|taskList[("taskList")]
+    vendors --> |"vndrList ⚡"|vndrList[("vndrList")]
+    workers --> |"wrkrList ⚡"|wrkrList[("wrkrList")]
+
+    %% Complex EventTypes
+    users & acc_users & accounts --> |"userAcctList ⚡"|userAcctList[("userAcctList")]
 
     %% Styling
     classDef default fill:#f9f,stroke:#333,stroke-width:2px
-    classDef views fill:#bbf,stroke:#333,stroke-width:2px
-    class acctList,userList,measList,userAcctList,ingrTypeList,brndList,ingrBtchList,ingrList,prodBtchList,prodList,prodTypeList,rcpeList,taskList,vndrList,wrkrList views
+    classDef eventType fill:#bbf,stroke:#333,stroke-width:2px,stroke-dasharray: 5 5
+    class acctList,userList,measList,ingrTypeList,brndList,ingrBtchList,ingrList,prodBtchList,prodList,prodTypeList,rcpeList,taskList,vndrList,wrkrList,userAcctList eventType
