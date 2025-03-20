@@ -1,4 +1,4 @@
-# WhatsFresh Documentation
+# What's Fresh Documentation
 
 ## Project Structure
 ```mermaid
@@ -15,21 +15,50 @@ graph TD
     I --> K[MySQL]
 ```
 
+### Client Documentation (`/client`)
+- **architecture/** - System design and patterns
+  - State management
+  - Event system
+  - Authentication flow
+- **components/** - Reusable component specifications
+  - CRUD operations
+  - Common components
+- **pages/** - Page-specific flows and implementations
+
+### Server Documentation (`/server`)
+- **api/** - API endpoints and protocols
+- **architecture/** - Backend system design
+- **database/** 
+  - Event types
+  - Schema design
+  - Stored procedures
+
 ## Quick Navigation
 - [Client Architecture](./client/architecture/)
 - [Server Database](./server/database/)
 - [API Documentation](./server/api/)
 
 ## Documentation Guidelines
-1. Use Markdown (`.md`) for text documentation
-2. Use Mermaid for diagrams and flows
-3. Keep documentation close to related code
-4. Update documentation with code changes
+1. Use Mermaid diagrams for visual representation
+2. Include implementation status in all component docs
+3. Link related documentation files
+4. Keep technical specifications current
 
 ## Getting Started
-To preview documentation:
-1. Press `Ctrl+Shift+V` to open preview
-2. For Mermaid diagrams, ensure preview is enabled
+1. Install required VS Code extensions:
+   - Markdown Preview Enhanced
+   - markdownlint
+
+2. Clone the documentation repository:
+```bash
+git clone <repository-url>
+cd docs
+```
+
+3. Create new documentation:
+   - Follow existing templates
+   - Use Markdown formatting
+   - Include Mermaid diagrams where helpful
 
 ## Contributing to Documentation
 
@@ -56,3 +85,9 @@ To preview documentation:
 - Keep changes focused and atomic
 - Update table of contents when adding new sections
 - Test all internal links before committing
+
+## Current Focus
+- [ ] Product page implementation
+- [ ] CRUD component specifications
+- [ ] Event system documentation
+- [ ] Database schema documentation
