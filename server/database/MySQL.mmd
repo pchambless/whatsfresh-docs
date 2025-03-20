@@ -1,22 +1,20 @@
 erDiagram
-
-    %% Tables and Views
     WHATSFRESH ||--o{ INGREDIENT_TYPES : contains
-    INGREDIENT_TYPES ||--o{ INGRTYPELIST : "provides view"
+    INGREDIENT_TYPES ||--o{ INGRTYPELIST : "provides_view"
     
     INGREDIENT_TYPES {
-        int id PK
-        string name
-        string description
-        int account_id FK
-        char active
+        int id PK "whatsfresh db"
+        string name "source table"
+        string description "source table"
+        int account_id FK "source table"
+        char active "source table"
     }
 
     INGRTYPELIST {
-        int ingrTypeID
-        string ingrTypeName
-        string ingrTypeDesc
-        int acctID
+        int ingrTypeID "api_wf db"
+        string ingrTypeName "view"
+        string ingrTypeDesc "view"
+        int acctID "view"
     }
 
     %% Note: Source tables in whatsfresh database, views in api_wf database
