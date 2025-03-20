@@ -8,22 +8,25 @@ erDiagram
     }
 
     %% Tables and Views
-    whatsfresh_ingredient_types ||--o{ api_wf_ingrTypeList : "provides view data"
+    WHATSFRESH ||--o{ INGREDIENT_TYPES : contains
+    INGREDIENT_TYPES ||--o{ INGRTYPELIST : "provides view"
     
-    whatsfresh_ingredient_types {
-        int id PK "[whatsfresh] Primary Key"
-        string name "Source table column"
-        string description "Source table column"
-        int account_id FK "Foreign Key to accounts"
-        char active "Y/N flag"
+    INGREDIENT_TYPES {
+        int id PK
+        string name
+        string description
+        int account_id FK
+        char active
     }
 
-    api_wf_ingrTypeList {
-        int ingrTypeID "[api_wf] View column"
-        string ingrTypeName "Maps from source.name"
-        string ingrTypeDesc "Maps from source.description"
-        int acctID "Maps from source.account_id"
+    INGRTYPELIST {
+        int ingrTypeID
+        string ingrTypeName
+        string ingrTypeDesc
+        int acctID
     }
+
+    %% Note: Source tables in whatsfresh database, views in api_wf database
 
     %% Database context notes
     note "Database Architecture:
