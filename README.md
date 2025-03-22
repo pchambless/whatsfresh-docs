@@ -1,7 +1,7 @@
-# What's Fresh Documentation
+# What's Fresh Today?
 
 ## Overview
-What's Fresh is a traceability solution designed for small-scale food producers and artisanal makers. In response to the FDA's Food Traceability Final Rule, the application simplifies ingredient tracking from procurement through production, ensuring regulatory compliance without overwhelming administrative overhead.
+Whatfresh is a traceability solution designed for small-scale food producers and artisanal makers. In response to the FDA's Food Traceability Final Rule, the application simplifies ingredient tracking from procurement through production, ensuring regulatory compliance without overwhelming administrative overhead.
 
 ### Key Features
 - Ingredient batch tracking
@@ -12,12 +12,19 @@ What's Fresh is a traceability solution designed for small-scale food producers 
 
 ### System Architecture
 The application uses a multi-tier architecture:
-1. **Source Database (whatsfresh):** Stores core business data.
-2. **API Database (api_wf):** Provides optimized views for data access.
+1. **MySQL Operational Database (whatsfresh):** Stores core business data.
+2. **API Database Views (api_wf):** Provides optimized views for data access.
 3. **Server Processes:** Handle business logic and event management.
 4. **Client Interface:** Delivers intuitive maker-focused workflows.
 
-## Project Structure
+#### Quick Navigation
+- [Whatsfresh](#1-whatsfresh)
+- [db.whatsfresh](#2-dbwhatsfresh)
+- [db.api_wf - dbViews](#3-dbapi_wf---dbviews)
+- [Server/APIs](#4-serverapis)
+- [Client](#5-client)
+
+## High Level Project Structure
 ```mermaid
 graph LR
     A[Whatsfresh] --> DB[db.whatsfresh]
@@ -27,8 +34,8 @@ graph LR
     B --> |DML Requests|C
 ```
 
-## Database Schema
-Below is the detailed database flow diagram showing how data flows from the source tables to API views and then into the server for event processing:
+## Data Flow
+Below is the detailed database flow diagram showing how data flows from the source tables to API views and then into the server for event processing.  The EventTypes are then loaded to the Client to drive the CRUD and other operations.  How these EventTypes are utilized in the Client can be seen Here(a link to the Client pages)
 
 ```mermaid
 graph LR
@@ -140,10 +147,38 @@ This represents the overall application and serves as the top-level entity in ou
 
 ### 2. db.whatsfresh
 *Description:*  
-This database stores the primary, operational data for What's Fresh.
+This database stores the primary, operational data for WhatFresh. It uses both tables and views (to normalize data for reporting purposes).
 
-*Details to add:*  
-- Key tables (e.g., accounts, users, etc.)  
+*Global Tables:*
+- **accounts** – Stores account and customer information.
+- **users** – Contains maker and administrative users.
+- **global_measure_units** – Defines standardized measurement units.
+- **accounts_users** – Maps users to their accounts.
+
+*Account Tables:*
+- **brands** – Lists brands for products and ingredients.
+- **vendors** – Stores vendor information.
+- **workers** – Contains data on production workers.
+  
+*Ingredient Tables:*
+- **ingredient_types** – Catalogs types of ingredients.
+- **ingredient_batches** – Tracks purchase and usage of ingredients.
+- **ingredients** – Stores detailed ingredient data.
+  
+*Product Tables:*
+- **product_types** – Classifies products.
+- **tasks** – Details the tasks involved with a Product Type.
+- **products** – This contains the list of an Account's product line.
+- **product_recipes** – Manages recipes and formulations.
+- **product_batches** – Documents production batches.
+
+*Product Batch Mapping:*
+- **product_batch_ingredients** – This is the mapping of Ingredient batches to Product Batches.
+- **product_batch_tasks** – This details the tasks information (steps, workers, measurement, etc) involved in making a product batch.
+
+
+
+*Other Details to add:*  
 - Data sources and update frequency  
 - Backup and recovery considerations
 
@@ -278,3 +313,4 @@ The client interface delivers maker-focused workflows, providing easy-to-use scr
 - Follow existing templates
 - Use Markdown for text and Mermaid for diagrams
 - Build out each entity section as the project evolves
+````
