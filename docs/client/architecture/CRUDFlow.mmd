@@ -1,0 +1,29 @@
+sequenceDiagram
+    participant User
+    participant Tabs
+    participant CrudTable
+    participant CrudForm
+    participant CrudDML
+
+    User->>CrudTable: 1. Clicks Row in Table
+    CrudTable->>CrudForm: formMode='edit'
+    Note over CrudForm: Populate Form Fields from Table row.
+    CrudTable->>Tabs: Next Tab Visible
+    CrudForm->>CrudForm: Validation
+    
+
+    User->>CrudTable: 2. Clicks Add New
+    CrudTable->>CrudForm: formMode='add'
+    Note over CrudForm: Initialize Form Fields
+    User->>CrudForm: Fills Fields
+    CrudForm->>CrudForm: Validation
+    User->>CrudForm: Clicks Submit
+    CrudForm->>CrudDML: Stage INSERT data
+
+    User->>CrudTable: 3. Clicks Delete Icon in Table row.
+    Note over CrudTable: Confirm Delete Modal
+    CrudTable->>CrudDML: Stage DELETE data
+    Note over CrudForm: Initialize Form Fields
+
+    User->>CrudForm: 4. Clicks Submit
+    CrudForm->>CrudDML: stage INSERT/UPDATE data

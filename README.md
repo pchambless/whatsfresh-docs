@@ -46,78 +46,25 @@ This represents the overall application and serves as the top-level entity in ou
 - How it interconnects with the underlying databases
 
 ---
+### 2. db.whatsfresh - Database operational tables.
 
-### 2. db.whatsfresh
 *Description:*  
 This database stores the primary, operational data for WhatFresh. It uses both tables and views (to normalize data for reporting purposes).
 
-*Global Tables:*
-- **<span style="color:#00008B;">accounts</span>** – Stores account and customer information.
-- **<span style="color:#00008B;">users</span>** – Contains maker and administrative users.
-- **<span style="color:#00008B;">global_measure_units</span>** – Defines standardized measurement units.
-- **<span style="color:#00008B;">accounts_users</span>** – Maps users to their accounts.
-
-*Account Tables:*
-- **<span style="color:#00008B;">brands</span>** – Lists brands for products and ingredients.
-- **<span style="color:#00008B;">vendors</span>** – Stores vendor information.
-- **<span style="color:#00008B;">workers</span>** – Contains data on production workers.
-  
-*Ingredient Tables:*
-- **<span style="color:#00008B;">ingredient_types</span>** – Catalogs types of ingredients.
-- **<span style="color:#00008B;">ingredient_batches</span>** – Tracks purchase and usage of ingredients.
-- **<span style="color:#00008B;">ingredients</span>** – Stores detailed ingredient data.
-  
-*Product Tables:*
-- **<span style="color:#00008B;">product_types</span>** – Classifies products.
-- **<span style="color:#00008B;">tasks</span>** – Details the tasks involved with a Product Type.
-- **<span style="color:#00008B;">products</span>** – Contains the list of an Account's product line.
-- **<span style="color:#00008B;">product_recipes</span>** – Manages recipes and formulations.
-- **<span style="color:#00008B;">product_batches</span>** – Documents production batches.
-
-*Product Batch Mapping:*
-- **<span style="color:#00008B;">product_batch_ingredients</span>** – Maps Ingredient batches to Product Batches.
-- **<span style="color:#00008B;">product_batch_tasks</span>** – Details task information (steps, workers, measurements, etc.) for production.
-
-*Other Details to add:*  
-- Data sources and update frequency  
-- Backup and recovery considerations
+[See Table List...](./docs/database/db_whatsfresh.md)
 
 ---
 
 ### 3. db.api_wf - dbViews
 *Description:*  
-This holds the API-optimized views derived from the whatsfresh database. These views provide a simplified and performance-tuned representation of the underlying data.
+This database stores API-optimized views derived from the whatsfresh database. These views provide a simplified and performance-tuned representation of the underlying data, helping to support reporting and external API consumption.
 
-*Details to add:*  
-- Overview of key views (e.g., acctList, userList, etc.)  
-- Source-to-view mappings  
-- How these views are used by the API layer
+[See View List...](./docs/database/db_api_wf.md)
 
-<details>
-  <summary>View Data Flow for db.api_wf - dbViews</summary>
-
-  ```mermaid
-  graph LR
-      subgraph API_WF[api_wf DB Views]
-          direction LR
-          acctList_view[("acctList")]
-          userList_view[("userList")]
-          measList_view[("measList")]
-          ingrTypeList_view[("ingrTypeList")]
-          brndList_view[("brndList")]
-          ingrBtchList_view[("ingrBtchList")]
-          ingrList_view[("ingrList")]
-          prodBtchList_view[("prodBtchList")]
-          prodList_view[("prodList")]
-          prodTypeList_view[("prodTypeList")]
-          rcpeList_view[("rcpeList")]
-          taskList_view[("taskList")]
-          vndrList_view[("vndrList")]
-          wrkrList_view[("wrkrList")]
-          userAcctList_view[("userAcctList")]
-      end
-  ```
-</details>
+*Other Details to add:*  
+- Overview of source-to-view mappings  
+- How these views are consumed by the API layer  
+- Update strategies, caching, or refresh schedules
 
 ---
 
@@ -127,91 +74,7 @@ This layer implements business logic and exposes data through APIs. It processes
 
 **Server Components Flowchart:**
 
-```mermaid
-flowchart LR
-
-subgraph 0["server"]
-    1["app.js"]
-    subgraph 2["controller"]
-        3["Initialize.js"]
-        4["execEventType.js"]
-        B["fetchApiColumns.js"]
-        E["fetchEventTypes.js"]
-        F["listRegisteredRoutes.js"]
-        G["queryResolver.js"]
-        H["restartServer.js"]
-        J["userLogin.js"]
-    end
-    subgraph K["middleware"]
-        L["apiColumns.js"]
-        M["eventRoutes.js"]
-    end
-    subgraph N["routes"]
-        O["index.js"]
-        R["registerRoutes.js"]
-    end
-    Z["server.js"]
-    subgraph 13["utils"]
-        14["db.js"]
-        15["dbConfig.js"]
-        16["dbUtils.js"]
-        17["queryResolver.js"]
-    end
-end
-
-subgraph 5["@middleware"]
-    6["eventRoutes"]
-end
-subgraph 7["@utils"]
-    8["dbConfig"]
-    9["dbUtils"]
-    A["queryResolver"]
-end
-C["fs"]
-D["path"]
-I["child_process"]
-subgraph P["@routes"]
-    Q["registerRoutes"]
-end
-subgraph S["@controller"]
-    T["execEventType"]
-    U["fetchApiColumns"]
-    V["fetchEventTypes"]
-    W["initialize"]
-    X["listRegisteredRoutes"]
-    Y["restartServer"]
-end
-subgraph 10["@root"]
-    subgraph 11["server"]
-        12["app"]
-    end
-end
-
-4-->6
-4-->8
-4-->9
-4-->A
-B-->9
-B-->C
-B-->D
-E-->C
-E-->D
-G-->6
-G-->9
-H-->I
-J-->9
-O-->Q
-R-->T
-R-->U
-R-->V
-R-->W
-R-->X
-R-->Y
-Z-->U
-Z-->V
-Z-->12
-Z-->Q
-```
+[Component Flowchart](./docs/server/FlowChart.md)
 
 ---
 
