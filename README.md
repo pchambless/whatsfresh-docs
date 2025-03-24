@@ -1,5 +1,20 @@
 # What's Fresh Today?
 
+#### Quick Navigation
+- [What's Fresh Today?](#whats-fresh-today)
+            - [Quick Navigation](#quick-navigation)
+    - [Overview](#overview)
+        - [Key Features](#key-features)
+        - [System Architecture](#system-architecture)
+    - [High Level Project Structure](#high-level-project-structure)
+        - [2. db.whatsfresh - Operational](#2-dbwhatsfresh---operational)
+        - [3. db.api\_wf - dbViews](#3-dbapi_wf---dbviews)
+        - [4. Server/APIs](#4-serverapis)
+        - [5. Client](#5-client)
+        - [6. EventType Flow](#6-eventtype-flow)
+    - [Resources for Developers](#resources-for-developers)
+    - [Creating New Documentation](#creating-new-documentation)
+
 ## Overview
 Whatfresh is a traceability solution designed for small-scale food producers and artisanal makers. In response to the FDA's Food Traceability Final Rule, the application simplifies ingredient tracking from procurement through production—ensuring regulatory compliance without overwhelming administrative overhead.
 
@@ -17,23 +32,7 @@ The application uses a multi-tier architecture:
 3. **Server Processes:** Handle business logic and event management.
 4. **Client Interface:** Delivers intuitive maker-focused workflows.
 
-#### Quick Navigation
-- [What's Fresh Today?](#whats-fresh-today)
-    - [Overview](#overview)
-        - [Key Features](#key-features)
-        - [System Architecture](#system-architecture)
-            - [Quick Navigation](#quick-navigation)
-    - [High Level Project Structure](#high-level-project-structure)
-        - [2. db.whatsfresh - Operational](#2-dbwhatsfresh---operational)
-        - [3. db.api\_wf - dbViews](#3-dbapi_wf---dbviews)
-        - [4. Server/APIs](#4-serverapis)
-        - [5. Client](#5-client)
-    - [6. EventType Flow](#6-eventtype-flow)
-    - [Creating New Documentation](#creating-new-documentation)
-
 ## High Level Project Structure
-
-Instead of hardcoded api endpoints, Whatsfresh is based on a table-driven list of **EventTypes**. This makes for less coding, but an understanding of the dataflow is paramount.  Here is the high-level flow of data.
 ```mermaid
 graph TD
     DB[database.whatsfresh - Operational]
@@ -42,7 +41,6 @@ graph TD
     C --> |EventTypes| B[Client Pages] 
     B --> |DML Request| C
     C --> |DML Request| DB
-
 ```
 
 ### 2. db.whatsfresh - Operational
@@ -75,6 +73,11 @@ This layer implements business logic and exposes data through APIs. It processes
 
 [Server Component Flowchart](./docs/server/FlowChart.md)
 
+*Other Details to add:*  
+- Overview of API endpoints  
+- Event processing flow  
+- Integration with database views
+
 ---
 
 ### 5. Client
@@ -86,14 +89,21 @@ The client interface delivers maker-focused workflows with interactive screens f
 - Key components and page flows  
 - How the client consumes data from the server APIs
 
-
 ---
 
-## 6. EventType Flow
+### 6. EventType Flow
 
 Below is the detailed **EventType** flow diagram showing how data flows from the source tables to EventType views and then into the server. The EventTypes are then loaded and utilized in the Client Page processes.
 
 - [EventType Dataflow](./docs/dataFlow.md)
+
+---
+
+## Resources for Developers
+This documentation is primarily intended for developers interested in contributing to or understanding the internals of Whatfresh.
+
+- **wf-server Repository:** [https://github.com/pchambless/wf-server](https://github.com/pchambless/wf-server)
+- **wf-client Repository:** [https://github.com/pchambless/wf-client](https://github.com/pchambless/wf-client)
 
 ---
 
