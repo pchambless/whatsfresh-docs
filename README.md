@@ -6,7 +6,7 @@
     - [Overview](#overview)
         - [Key Features](#key-features)
         - [System Architecture](#system-architecture)
-    - [High Level Project Structure](#high-level-project-structure)
+    - [Project Structure and Flows](#high-level-project-structure)
         - [2. db.whatsfresh - Operational](#2-dbwhatsfresh---operational)
         - [3. db.api\_wf - dbViews](#3-dbapi_wf---dbviews)
         - [4. Server/APIs](#4-serverapis)
@@ -33,12 +33,16 @@ The application uses a multi-tier architecture:
 4. **Client Interface:** Delivers intuitive maker-focused workflows.
 
 ## High Level Project Structure
+EventTypes are the drivers for the overall Whatsfresh process.  EventTypes (a.k.a. listEvents) are used to communicate between the Server and the Client.  They are currently maintained using an Appsmith App.  
+**Note:**  Eventually it would be a great idea to migrate the Appsmith app to a dedicated Admin type app /repository.
 ```mermaid
 graph TD
     DB[database.whatsfresh - Operational]
     DB --> DBV[database.api_wf - EventType Views]
     DBV --> |EventTypes|C[Server/APIs]
-    C --> |EventTypes| B[Client Pages] 
+    C --> |Load listEvents| B[Client Pages]
+    C --> |listEvent data|B
+    B --> |Request data listEvents| C 
     B --> |DML Request| C
     C --> |DML Request| DB
 ```
@@ -104,6 +108,7 @@ This documentation is primarily intended for developers interested in contributi
 
 - **wf-server Repository:** [https://github.com/pchambless/wf-server](https://github.com/pchambless/wf-server)
 - **wf-client Repository:** [https://github.com/pchambless/wf-client](https://github.com/pchambless/wf-client)
+- **Appsmith App:** [https://github.com/pchambless/wf-client](https://github.com/pchambless/wf-client)
 
 ---
 
